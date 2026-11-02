@@ -1,0 +1,13 @@
+{
+  "name": "my-repo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "GitHub Actions 自动测试与自动修复演示",
+  "type": "module",
+  "scripts": {
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
