@@ -5,9 +5,10 @@
   "description": "GitHub Actions 自动测试与自动修复演示",
   "type": "module",
   "scripts": {
-    "test": "node --test"
+    "test": "node --test",
+    "test:coverage": "node --test --experimental-test-coverage --test-coverage-include=\"src/**\" --test-coverage-lines=90 --test-coverage-functions=90 --test-coverage-branches=80"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=24"
   }
 }
