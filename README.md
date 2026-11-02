@@ -38,12 +38,19 @@ npm test
 
 无需安装依赖，使用 Node.js 内置测试运行器（Node ≥ 18）。
 
-## 可继续扩展的自动化能力
+## 自动化能力清单
 
-| 能力 | 接入方式 |
-|---|---|
-| 依赖漏洞自动修复 | 启用 Dependabot（`.github/dependabot.yml`） |
-| 代码安全扫描 + AI 修复建议 | 启用 CodeQL 默认配置，配合 Copilot Autofix |
-| PR 自动评审 | 启用 Copilot code review |
-| Issue 自动改代码 | 将 Issue 分派给 Copilot coding agent |
-| 覆盖率门禁 | 增加 `c8` / `node --experimental-test-coverage` 并设阈值 |
+| 能力 | 配置 | 状态 |
+|---|---|---|
+| 单元测试 | `.github/workflows/ci.yml` | ✅ 已启用 |
+| 依赖自动升级 | `.github/dependabot.yml`（npm + GitHub Actions，每周一） | ✅ 已启用 |
+| 代码安全扫描 | `.github/workflows/codeql.yml`（security-and-quality，push/PR/每周） | ✅ 已启用 |
+| AI 自动修复 PR | Copilot Autofix / coding agent | ⬜ 需订阅后开启 |
+| PR 自动评审 | Copilot code review | ⬜ 需订阅后开启 |
+| 覆盖率门禁 | `c8` 或 `node --experimental-test-coverage` | ⬜ 待接入 |
+
+### 安全扫描演示
+
+`src/vuln-demo.js` **故意**包含一处命令注入漏洞（用户输入直接拼进 `exec`），
+用于演示 CodeQL 在 Security 页生成告警、以及 Copilot Autofix 一键给出修复补丁的流程。
+该文件未被任何代码引用，不影响测试；正式使用时请删除。
