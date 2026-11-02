@@ -8,13 +8,14 @@
 
 - 用于演示 GitHub MCP 的仓库 / Issue / PR 能力
 - 用于演示 **GitHub Actions 自动测试 + 缺陷修复闭环**
+- 用于演示 **覆盖率门禁**（低于阈值直接红）
 - 默认分支：`main`
 
 ## 项目结构
 
 ```
 .
-├── .github/workflows/ci.yml   # GitHub Actions：push / PR 自动跑单测
+├── .github/workflows/ci.yml   # GitHub Actions：push / PR 自动跑单测 + 覆盖率门禁
 ├── src/sum.js                 # 被测函数
 ├── test/sum.test.js           # 单元测试（node:test，零依赖）
 ├── docs/course-intro.md       # 课程简介（见 PR #3）
@@ -33,21 +34,24 @@
 ## 本地运行
 
 ```bash
-npm test
+npm test            # 只跑测试
+npm run test:coverage   # 测试 + 覆盖率门禁（行/函数 ≥90%，分支 ≥80%）
 ```
 
-无需安装依赖，使用 Node.js 内置测试运行器（Node ≥ 18）。
+无需安装依赖，使用 Node.js 内置测试运行器（Node ≥ 24）。
+
+门禁实测：阈值设 101% 时进程 exit=1，设 90% 时 exit=0，确认规则真实生效而非摆设。
 
 ## 自动化能力清单
 
 | 能力 | 配置 | 状态 |
 |---|---|---|
 | 单元测试 | `.github/workflows/ci.yml` | ✅ 已启用 |
+| 覆盖率门禁 | `npm run test:coverage`（行/函数 ≥90%，分支 ≥80%） | ✅ 已启用 |
 | 依赖自动升级 | `.github/dependabot.yml`（npm + GitHub Actions，每周一） | ✅ 已启用 |
 | 代码安全扫描 | `.github/workflows/codeql.yml`（security-and-quality，push/PR/每周） | ✅ 已启用 |
 | AI 自动修复 PR | Copilot Autofix / coding agent | ⬜ 需订阅后开启 |
 | PR 自动评审 | Copilot code review | ⬜ 需订阅后开启 |
-| 覆盖率门禁 | `c8` 或 `node --experimental-test-coverage` | ⬜ 待接入 |
 
 ### 安全扫描演示
 
